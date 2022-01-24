@@ -1,4 +1,6 @@
-package input
+package output
+
+import "github.com/marcoscarvalho04/combate-covid-golang-core/data/input"
 
 type HospitalOutputPort struct {
 	Id          int32  `json:"id"`
@@ -12,7 +14,7 @@ type HospitalOutputPort struct {
 	PercentualDeOcupacao float32 `json:"percentualDeOcupacao"`
 }
 
-func ConverterInputPortToOutputPort(hospitalInputPort HospitalInputPort) HospitalOutputPort {
+func ConverterInputPortToOutputPort(hospitalInputPort input.HospitalInputPort) HospitalOutputPort {
 	hospitalOutputPort := HospitalOutputPort{}
 
 	hospitalOutputPort.Nome = hospitalInputPort.Nome
