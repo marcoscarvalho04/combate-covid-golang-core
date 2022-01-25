@@ -28,3 +28,5 @@ func (c *HospitalOutputPort) ConverterInputPortToOutputPort(hospitalInputPort in
 		Localizacao:          hospitalInputPort.Localizacao,
 	}
 }
+
+//
