@@ -6,7 +6,7 @@ import (
 
 type HospitalRepository struct{}
 
-func (c *HospitalRepository) Create(newHospital entity.HospitalEntity) error {
+func (c *HospitalRepository) Create(newHospital *entity.HospitalEntity) error {
 	database, err := ConfigureDatabase()
 	if err != nil {
 		return err

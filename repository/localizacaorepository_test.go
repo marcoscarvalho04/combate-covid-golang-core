@@ -18,7 +18,7 @@ func TestCreateSuccessfullyModel(t *testing.T) {
 		PercentualDeOcupacao: 32.0,
 	}
 	hospitalRepository := HospitalRepository{}
-	err := hospitalRepository.Create(hospitalEntity)
+	err := hospitalRepository.Create(&hospitalEntity)
 
 	if err != nil {
 		t.Errorf("error creating new entity: %s", err.Error())
