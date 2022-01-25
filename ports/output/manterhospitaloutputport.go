@@ -9,8 +9,9 @@ import (
 func SalvarHospital(outputPort output.HospitalOutputPort) (output.HospitalOutputPort, error) {
 
 	hospitalEntity := entity.ConverterOutputToEntity(outputPort)
-	database := repository.Database{}
-	err := database.Create(hospitalEntity)
+	hospitalRepository := repository.HospitalRepository{}
+
+	err := hospitalRepository.Create(hospitalEntity)
 	if err != nil {
 		return outputPort, err
 	}

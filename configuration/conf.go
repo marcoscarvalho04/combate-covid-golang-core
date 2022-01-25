@@ -7,37 +7,42 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type ConfigModel interface{}
-
-type AllConfigurationContract interface {
-	LoadAllConfiguration(string, interface{})
-}
-
-type AllConfiguration struct {
-	AllConfiguration AllConfigurationContract
-	Config           Config
-}
-
 type Config struct {
-	AllConfiguration ConfigModel
+	Database struct {
+		Url string `yaml:"url"`
+	}
 }
 
 const (
 	APPLICATION_PROPERTIES_FILE = "./resources/Application.yml"
 )
 
-func (configuration *AllConfiguration) LoadAllConfiguration(modelOfConfiguration ConfigModel) {
+func LoadAllConfiguration(path string) Config {
 
-	fmt.Printf("Reading all configuration from properties: %s", APPLICATION_PROPERTIES_FILE)
+	var file []byte
+	var err error
 
-	file, err := ioutil.ReadFile(APPLICATION_PROPERTIES_FILE)
+	if len(path) > 0 {
+		fmt.Printf("reading configuration file from: %s", path)
+		file, err = ioutil.ReadFile(path)
+	} else {
+		fmt.Printf("reading configuration file from: %s", APPLICATION_PROPERTIES_FILE)
+		file, err = ioutil.ReadFile(APPLICATION_PROPERTIES_FILE)
+	}
+
+	if err != nil {
+		file, err = ioutil.ReadFile("." + APPLICATION_PROPERTIES_FILE)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	config := Config{}
+
+	err = yaml.Unmarshal(file, &config)
 
 	if err != nil {
 		panic(err)
 	}
-	err = yaml.Unmarshal(file, &modelOfConfiguration)
-
-	if err != nil {
-		panic(err)
-	}
+	return config
 }

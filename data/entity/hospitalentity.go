@@ -6,28 +6,29 @@ import (
 )
 
 type LocalizacaoEntity struct {
-	Id        uint `gorm:"primaryKey"`
+	ID        uint `gorm:"primaryKey"`
 	Latitude  string
 	Longitude string
 }
 type HospitalEntity struct {
 	gorm.Model
-	Id                   uint `gorm:"primaryKey"`
+	ID                   uint `gorm:"primaryKey"`
 	Nome                 string
 	Cnpj                 string
 	Endereco             string
-	Localizacao          LocalizacaoEntity
+	LocalizacaoEntity    LocalizacaoEntity `gorm:"-"`
+	LocalizacaoId        uint              `gorm:"TYPE:integer REFERENCES LocalizacaoEntity;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	PercentualDeOcupacao float32
 }
 
 func ConverterOutputToEntity(outputPort output.HospitalOutputPort) HospitalEntity {
 	return HospitalEntity{
-		Id:                   uint(outputPort.Id),
+
 		Nome:                 outputPort.Nome,
 		Cnpj:                 outputPort.Cnpj,
 		Endereco:             outputPort.Cnpj,
 		PercentualDeOcupacao: outputPort.PercentualDeOcupacao,
-		Localizacao: LocalizacaoEntity{
+		LocalizacaoEntity: LocalizacaoEntity{
 			Latitude:  outputPort.Localizacao.Latitude,
 			Longitude: outputPort.Localizacao.Longitude,
 		},
