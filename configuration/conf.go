@@ -35,7 +35,7 @@ func (configuration *AllConfiguration) LoadAllConfiguration(modelOfConfiguration
 	if err != nil {
 		panic(err)
 	}
-	err = yaml.Unmarshal(file, modelOfConfiguration)
+	err = yaml.Unmarshal(file, &modelOfConfiguration)
 
 	if err != nil {
 		panic(err)
