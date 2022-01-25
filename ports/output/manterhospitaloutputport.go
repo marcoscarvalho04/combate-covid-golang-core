@@ -11,7 +11,7 @@ func SalvarHospital(outputPort output.HospitalOutputPort) (output.HospitalOutput
 	hospitalEntity := entity.ConverterOutputToEntity(outputPort)
 	hospitalRepository := repository.HospitalRepository{}
 
-	err := hospitalRepository.Create(hospitalEntity)
+	err := hospitalRepository.Create(&hospitalEntity)
 	if err != nil {
 		return outputPort, err
 	}
